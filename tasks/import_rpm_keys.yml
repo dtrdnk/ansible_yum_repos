@@ -1,0 +1,14 @@
+---
+- name: Yum_repos | Download RPM keys
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.saved_path }}"
+    mode: 0644
+    owner: root
+  with_items: "{{ rpm_keys }}"
+
+- name: Yum_repos | Import downloaded RPM keys
+  ansible.builtin.rpm_key:
+    state: "{{ item.state }}"
+    key: "{{ item.saved_path }}"
+  with_items: "{{ rpm_keys }}"

@@ -1,0 +1,13 @@
+#
+# Custom settings
+# {{ ansible_managed }}
+#
+{% for conf in package_manager_config -%}
+{% for key, value in conf.items() -%}
+{% if key == "name" -%}
+[{{ value }}]
+{% else -%}
+{{ key }}={{ value }}
+{% endif -%}
+{% endfor -%}
+{% endfor -%}

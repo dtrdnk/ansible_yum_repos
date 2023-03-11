@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: DtrDnk
+  namespace: dtrdnk
+  description: The role manage repos in RHEL distros
+  company: IAC
+  license: BSD-3-Clause
+  min_ansible_version: "2.14"
+  platforms:
+    - name: EL
+      versions:
+        - "7"
+        - "8"
+    - name: Fedora
+      versions:
+        - "26"
+        - "27"
+        - "28"
+  galaxy_tags:
+    - yum_repos
+dependencies: []

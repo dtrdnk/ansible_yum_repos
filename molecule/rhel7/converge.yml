@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Include iac.yum_repos
+      include_role:
+        name: iac.yum_repos
+    - name: Update cache
+      ansible.builtin.yum:
+        update_cache: true
+    - name: Install test package
+      ansible.builtin.yum:
+        name: nmon
+        state: present
+  vars_files:
+    - rhel7.yml

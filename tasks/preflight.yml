@@ -1,0 +1,28 @@
+---
+- name: Yum_repos | Initialize lists
+  ansible.builtin.set_fact:
+    list_of_current_repo_files: []
+    list_of_repo_files_to_save: []
+
+- name: Yum_repos | Find exists repo files
+  ansible.builtin.find:
+    paths: "{{ repo_files_path }}"
+    recurse: "no"
+    file_type: "file"
+    patterns: "(.*)"
+    use_regex: "true"
+  register: "list_of_current_repo_files"
+
+- name: Yum_repos | Create list of repo files to save
+  ansible.builtin.set_fact:
+    list_of_repo_files_to_save: "{{ 
+    list_of_repo_files_to_save + 
+    [repo_files_path + item.name + '.repo'] }}"
+  with_items: "{{ yum_repo_common_files + yum_repo_additional_files }}"
+
+- name: Yum_repos | Delete unused repo files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  with_items: "{{ list_of_current_repo_files.files | map(attribute='path') | list }}"
+  when: item not in list_of_repo_files_to_save

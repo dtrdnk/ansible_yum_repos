@@ -1,0 +1,6 @@
+---
+# Attention! Keep slash at the end, because its need in the preflight tasks
+repo_files_path: /etc/yum.repos.d/
+
+# By default, RHEL 7 used yum as pkg manager, RHEL 8 and above use dnf
+package_manager_config_path: '{% if ansible_facts["distribution_major_version"] | int >= 8 %}/etc/dnf/dnf.conf{% else %}/etc/yum.conf{% endif %}'

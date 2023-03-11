@@ -1,0 +1,8 @@
+---
+- name: Yum_repos | Update package manager configuration file
+  ansible.builtin.template:
+    src: package_manager.conf.j2
+    dest: "{{ package_manager_config_path }}"
+    owner: root
+    group: root
+    mode: 0644

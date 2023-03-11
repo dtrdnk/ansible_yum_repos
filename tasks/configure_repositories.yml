@@ -1,0 +1,8 @@
+---
+- name: Yum_repos | Templating repo files
+  ansible.builtin.template:
+    src: repo_file_tpl.j2
+    dest: "/etc/yum.repos.d/{{ item.name }}.repo"
+    mode: 0644
+    owner: root
+  with_items: "{{ yum_repo_common_files + yum_repo_additional_files }}"

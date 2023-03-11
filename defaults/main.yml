@@ -1,0 +1,79 @@
+---
+# This list of dict describe repo files and their content. Below example for CentOS 8 Stream
+yum_repo_common_files:
+  - name: CentOS-Stream-AppStream
+    repos:
+      - name: appstream
+        mirrorlist: 'http://mirrorlist.centos.org/?release=$stream&arch=$basearch&repo=AppStream&infra=$infra'
+        gpgcheck: 1
+        enabled: 1
+        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+  - name: CentOS-Stream-BaseOS
+    repos:
+      - name: baseos
+        mirrorlist: 'http://mirrorlist.centos.org/?release=$stream&arch=$basearch&repo=BaseOS&infra=$infra'
+        gpgcheck: 1
+        enabled: 1
+        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+  - name: CentOS-Stream-Extras
+    repos:
+      - name: extras
+        mirrorlist: 'http://mirrorlist.centos.org/?release=$stream&arch=$basearch&repo=extras&infra=$infra'
+        gpgcheck: 1
+        enabled: 1
+        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+  - name: CentOS-Stream-Extras-common
+    repos:
+      - name: extras-common
+        mirrorlist: 'http://mirrorlist.centos.org/?release=$stream&arch=$basearch&repo=extras-extras-common'
+        gpgcheck: 1
+        enabled: 1
+        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Extras
+  - name: epel
+    repos:
+      - name: epel
+        metalink: 'https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&arch=$basearch&infra=$infra&content=$contentdir'
+        enabled: 1
+        countme: 1
+        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+        gpgcheck: 1
+
+# Example of additional repos
+yum_repo_additional_files: []
+#  - name: docker-ce
+#    repos:
+#      - name: 'docker-ce-stable'
+#        baseurl: 'https://download.docker.com/linux/centos/$releasever/$basearch/stable'
+#        gpgcheck: 1
+#        enabled: 1
+#        gpgkey: https://download.docker.com/linux/centos/gpg
+
+rpm_keys:
+  - name: epel
+    url: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+    saved_path: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+    state: present
+
+# If you distro version => 8, below described default config
+package_manager_config:
+  - name: main
+    gpgcheck: 1
+    installonly_limit: 3
+    clean_requirements_on_remove: True
+    best: True
+    skip_if_unavailable: False
+
+# If you distro version =< 7, below described default config
+#package_manager_config:
+#  - name: main
+#    cachedir: /var/cache/yum/$basearch/$releasever
+#    keepcache: 0
+#    debuglevel: 2
+#    logfile: /var/log/yum.log
+#    exactarch: 1
+#    obsoletes: 1
+#    gpgcheck: 1
+#    plugins: 1
+#    installonly_limit: 5
+#    bugtracker_url: http://bugs.centos.org/set_project.php?project_id=23&ref=http://bugs.centos.org/bug_report_page.php?category=yum
+#    distroverpkg: centos-release

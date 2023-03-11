@@ -1,0 +1,12 @@
+---
+- name: Import tasks from preflight.yml
+  ansible.builtin.import_tasks: preflight.yml
+
+- name: Include tasks from configure_package_manager.yml
+  ansible.builtin.import_tasks: configure_package_manager.yml
+
+- name: Include tasks from manage_yum_repository.yml
+  ansible.builtin.import_tasks: configure_repositories.yml
+
+- name: Include tasks from import_rpm_keys.yml
+  ansible.builtin.include_tasks: import_rpm_keys.yml

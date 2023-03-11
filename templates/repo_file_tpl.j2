@@ -1,0 +1,10 @@
+#
+# Custom Yum Repositories
+# {{ ansible_managed }}
+#
+{% for repo in item.repos %}
+[{{ repo.name }}]
+{% for key, value in repo.items() %}
+{{ key }}={{ value }}
+{% endfor %}
+{% endfor %}

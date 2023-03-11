@@ -1,0 +1,10 @@
+{% if item.registry is defined %}
+FROM {{ item.registry.url }}/{{ item.image }}
+{% else %}
+FROM {{ item.image }}
+{% endif %}
+
+RUN if [ $(command -v dnf) ]; then \
+dnf install -y python3 && dnf clean all; \
+elif [ $(command -v yum) ]; then \
+yum install -y python3; fi
